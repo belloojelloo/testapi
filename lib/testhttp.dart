@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
-import 'package:testproject/products_provider.dart';
+
 import 'package:testproject/api/api_provider.dart';
 
 class TestHttp extends ConsumerWidget {

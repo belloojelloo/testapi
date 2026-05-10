@@ -6,7 +6,7 @@ import 'headers_provider.dart';
 
 final apiProvider = Provider<ApiProvider>((ref) => ApiProvider(ref));
 
-final apiUrl = "https://trim.thecodehaus.co/api/intern";
+final apiUrl = "https://dummyjson.com";
 
 class ApiProvider {
   final Ref ref;
