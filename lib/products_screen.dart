@@ -438,10 +438,51 @@ class ProductsScreen extends ConsumerWidget {
                       IconButton(
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          ref
-                              .read(apiProvider)
-                              .baseDelete('/${practiceItem['id']}');
-                          ref.invalidate(productsProvider);
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: const Text('Delete Product'),
+                              content: const Text(
+                                'Are you sure you want to delete this item?',
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    final response = await ref
+                                        .read(apiProvider)
+                                        .baseDelete('/${practiceItem['id']}');
+
+                                    Navigator.pop(context);
+
+                                    if (response.statusCode == 200) {
+                                      ref.invalidate(productsProvider);
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Item deleted successfully.',
+                                          ),
+                                        ),
+                                      );
+                                      return;
+                                    }
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Failed to delete item.'),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text('Delete'),
+                                ),
+                              ],
+                            ),
+                          );
                         },
                       ),
                     ],
